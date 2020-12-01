@@ -3,31 +3,35 @@
 int main() {
   std::fstream newfile;
   std::vector<int> nums;
+  std::unordered_set<int> seen;
 
   newfile.open("input.txt", std::ios::in);
 
   if (newfile.is_open()) {
     std::string line;
+    int cur;
 
     while(getline(newfile, line)) {
-      nums.push_back(std::stoi(line));
+      cur = std::stoi(line);
+      nums.push_back(cur);
+      seen.emplace(cur);
     }
 
     newfile.close();
   }
 
-  int a, b, c;
-  for (int i = 0; i < nums.size(); i++) {
-    for (int j = i + 1; j < nums.size(); j++) {
-      for (int k = j + 1; k < nums.size(); k++) {
-        a = nums[i];
-        b = nums[j];
-        c = nums[k];
+  int target;
+  bool found = false;
 
-        if (a + b + c == 2020) {
-          std::cout << a << " * " << b << " * " << c << " = " << a * b * c << std::endl;
-          break;
-        }
+  for (int i = 0; i < nums.size() && !found; i++) {
+    for (int j = i + 1; j < nums.size(); j++) {
+      target = 2020 - nums[i] - nums[j];
+
+      if (seen.find(target) != seen.end()) {
+        int product = nums[i] * nums[j] * target;
+        std::cout << nums[i] << " * " << nums[j] << " * " << target << " = " << product << std::endl;
+        found = true;
+        break;
       }
     }
   }
