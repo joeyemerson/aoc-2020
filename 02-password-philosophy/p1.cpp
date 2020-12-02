@@ -1,4 +1,4 @@
-#include "../includes.h"
+#include "../aoc.h"
 
 class PasswordValidator {
 private:
@@ -8,7 +8,7 @@ private:
   std::string password;
 
 public:
-  static std::vector<std::string> parse(std::string input) {
+  static std::vector<std::string> parse(std::string &input) {
     std::vector<std::string> parts;
     std::string curPart;
 
@@ -33,12 +33,12 @@ public:
     return targetCount >= lBound && targetCount <= uBound;
   }
 
-  PasswordValidator(std::string input) {
+  PasswordValidator(std::string &input) {
     std::vector<std::string> parts = PasswordValidator::parse(input);
-    this->lBound = std::stoi(parts[0]);
-    this->uBound = std::stoi(parts[1]);
-    this->targetChar = parts[2][0]; // always a single char
-    this->password = parts[3];
+    lBound = std::stoi(parts[0]);
+    uBound = std::stoi(parts[1]);
+    targetChar = parts[2][0]; // always a single char
+    password = parts[3];
   }
 };
 

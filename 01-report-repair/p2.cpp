@@ -1,4 +1,4 @@
-#include "../includes.h"
+#include "../aoc.h"
 
 int main() {
   std::fstream newfile;

@@ -1,4 +1,4 @@
-#include "../includes.h"
+#include "../aoc.h"
 
 struct PasswordValidator {
 private:
@@ -8,7 +8,7 @@ private:
   std::string password;
 
 public:
-  static std::vector<std::string> parse(std::string input) {
+  static std::vector<std::string> parse(std::string &input) {
     std::vector<std::string> parts;
     std::string curPart;
 
@@ -30,12 +30,12 @@ public:
     return (this->password[lowIndex] == targetChar) != (this->password[highIndex] == targetChar) ;
   }
 
-  PasswordValidator(std::string input) {
+  PasswordValidator(std::string &input) {
     std::vector<std::string> parts = PasswordValidator::parse(input);
-    this->lowIndex = std::stoi(parts[0]);
-    this->highIndex = std::stoi(parts[1]);
-    this->targetChar = parts[2][0]; // always a single char
-    this->password = parts[3];
+    lowIndex = std::stoi(parts[0]);
+    highIndex = std::stoi(parts[1]);
+    targetChar = parts[2][0]; // always a single char
+    password = parts[3];
   }
 };
 
