@@ -1,11 +1,13 @@
 #include "../includes.h"
 
-struct PasswordValidator {
+class PasswordValidator {
+private:
   int lBound;
   int uBound;
   char targetChar;
   std::string password;
 
+public:
   static std::vector<std::string> parse(std::string input) {
     std::vector<std::string> parts;
     std::string curPart;
@@ -23,20 +25,20 @@ struct PasswordValidator {
     return parts;
   }
 
-  PasswordValidator(std::string input) {
-    std::vector<std::string> parts = PasswordValidator::parse(input);
-    this->lBound = std::stoi(parts[0]);
-    this->uBound = std::stoi(parts[1]);
-    this->targetChar = parts[2][0]; // always a single char
-    this->password = parts[3];
-  }
-
   // Is valid if the count of targetChar in password string is within the bounds of validator.
   bool isValid() {
     int targetCount = 0;
     for (char c : this->password)
       if (c == targetChar) targetCount++;
     return targetCount >= lBound && targetCount <= uBound;
+  }
+
+  PasswordValidator(std::string input) {
+    std::vector<std::string> parts = PasswordValidator::parse(input);
+    this->lBound = std::stoi(parts[0]);
+    this->uBound = std::stoi(parts[1]);
+    this->targetChar = parts[2][0]; // always a single char
+    this->password = parts[3];
   }
 };
 

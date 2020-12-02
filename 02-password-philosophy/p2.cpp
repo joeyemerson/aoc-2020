@@ -1,11 +1,13 @@
 #include "../includes.h"
 
 struct PasswordValidator {
+private:
   int lowIndex;
   int highIndex;
   char targetChar;
   std::string password;
 
+public:
   static std::vector<std::string> parse(std::string input) {
     std::vector<std::string> parts;
     std::string curPart;
@@ -23,17 +25,17 @@ struct PasswordValidator {
     return parts;
   }
 
+  // Is valid if only one of the index positions has the targetChar.
+  bool isValid() {
+    return (this->password[lowIndex] == targetChar) != (this->password[highIndex] == targetChar) ;
+  }
+
   PasswordValidator(std::string input) {
     std::vector<std::string> parts = PasswordValidator::parse(input);
     this->lowIndex = std::stoi(parts[0]);
     this->highIndex = std::stoi(parts[1]);
     this->targetChar = parts[2][0]; // always a single char
     this->password = parts[3];
-  }
-
-  // Is valid if only one of the index positions has the targetChar.
-  bool isValid() {
-    return (this->password[lowIndex] == targetChar) != (this->password[highIndex] == targetChar) ;
   }
 };
 
