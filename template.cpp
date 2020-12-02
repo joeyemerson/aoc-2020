@@ -7,7 +7,7 @@ int main() {
     std::string line;
 
     while(getline(newfile, line)) {
-      nums.push_back(std::stoi(line));
+	// do something here
     }
 
     newfile.close();
