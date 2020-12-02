@@ -1,10 +1,7 @@
-#include "../includes.h"
+#include "../aoc.h"
 
 int main() {
-  std::fstream newfile;
-  std::vector<int> nums;
-
-  newfile.open("input.txt", std::ios::in);
+  std::ifstream newfile("input.txt", std::ios::in);
 
   if (newfile.is_open()) {
     std::string line;

@@ -8,7 +8,7 @@ private:
   std::string password;
 
 public:
-  static std::vector<std::string> parse(std::string &input) {
+  static std::vector<std::string> parse(const std::string &input) {
     std::vector<std::string> parts;
     std::string curPart;
 
@@ -28,12 +28,12 @@ public:
   // Is valid if the count of targetChar in password string is within the bounds of validator.
   bool isValid() {
     int targetCount = 0;
-    for (char c : this->password)
-      if (c == targetChar) targetCount++;
+    for (char c : password)
+      if (c == targetChar) ++targetCount;
     return targetCount >= lBound && targetCount <= uBound;
   }
 
-  PasswordValidator(std::string &input) {
+  PasswordValidator(const std::string &input) {
     std::vector<std::string> parts = PasswordValidator::parse(input);
     lBound = std::stoi(parts[0]);
     uBound = std::stoi(parts[1]);
@@ -43,17 +43,15 @@ public:
 };
 
 int main() {
-  std::fstream newfile;
+  std::ifstream newfile("input.txt", std::ios::in);
   int validPasswordCount = 0;
-
-  newfile.open("input.txt", std::ios::in);
 
   if (newfile.is_open()) {
     std::string line;
 
     while(getline(newfile, line)) {
       PasswordValidator pw(line);
-      if (pw.isValid()) validPasswordCount++;
+      if (pw.isValid()) ++validPasswordCount;
     }
 
     newfile.close();

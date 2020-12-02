@@ -8,7 +8,7 @@ private:
   std::string password;
 
 public:
-  static std::vector<std::string> parse(std::string &input) {
+  static std::vector<std::string> parse(const std::string &input) {
     std::vector<std::string> parts;
     std::string curPart;
 
@@ -27,10 +27,10 @@ public:
 
   // Is valid if only one of the index positions has the targetChar.
   bool isValid() {
-    return (this->password[lowIndex] == targetChar) != (this->password[highIndex] == targetChar);
+    return (password[lowIndex] == targetChar) != (password[highIndex] == targetChar);
   }
 
-  PasswordValidator(std::string &input) {
+  PasswordValidator(const std::string &input) {
     std::vector<std::string> parts = PasswordValidator::parse(input);
     lowIndex = std::stoi(parts[0]);
     highIndex = std::stoi(parts[1]);
@@ -40,17 +40,15 @@ public:
 };
 
 int main() {
-  std::fstream newfile;
+  std::ifstream newfile("input.txt", std::ios::in);
   int validPasswordCount = 0;
-
-  newfile.open("input.txt", std::ios::in);
 
   if (newfile.is_open()) {
     std::string line;
 
     while(getline(newfile, line)) {
       PasswordValidator pw(line);
-      if (pw.isValid()) validPasswordCount++;
+      if (pw.isValid()) ++validPasswordCount;
     }
 
     newfile.close();
