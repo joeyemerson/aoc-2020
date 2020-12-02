@@ -1,6 +1,6 @@
 #include "../aoc.h"
 
-struct PasswordValidator {
+class PasswordValidator {
 private:
   int lowIndex;
   int highIndex;
@@ -27,7 +27,7 @@ public:
 
   // Is valid if only one of the index positions has the targetChar.
   bool isValid() {
-    return (this->password[lowIndex] == targetChar) != (this->password[highIndex] == targetChar) ;
+    return (this->password[lowIndex] == targetChar) != (this->password[highIndex] == targetChar);
   }
 
   PasswordValidator(std::string &input) {
