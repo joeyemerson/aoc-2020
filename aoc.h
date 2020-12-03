@@ -15,5 +15,6 @@
 #include <bitset>
 #include <cmath>
 #include <functional>
+#include <numeric>
 #include <random>
 #include <regex>

@@ -7,7 +7,7 @@ int main() {
     std::string line;
 
     while(getline(newfile, line)) {
-	// do something here
+      // do something here
     }
 
     newfile.close();
