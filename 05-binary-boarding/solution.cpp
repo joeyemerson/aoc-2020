@@ -1,56 +1,44 @@
 #include "../aoc.h"
 
+// Using the given formula (row * 8 + col) yields the same value
+// as just converting the whole string to binary based on the
+// specified set (B, R) and unset (F, L) bit indicators.
 int getID(const std::string &boardingPass) {
-  const std::string rowBits = boardingPass.substr(0, 7);
-  const std::string colBits = boardingPass.substr(7, 3);
-  int row = std::stoi(rowBits, nullptr, 2);
-  int col = std::stoi(colBits, nullptr, 2);
-  return row * 8 + col;
+  std::string binary;
+  for (char c : boardingPass)
+    binary += c == 'B' || c == 'R' ? '1' : '0';
+  return std::stoi(binary, nullptr, 2);
 }
 
-std::string getBits(const std::string &boardingPass) {
-  std::string bits;
-  for (char c : boardingPass) {
-    if (c == 'F' || c == 'L') bits += '0';
-    else bits += '1';
-  }
-  return bits;
-}
+int sumNumbersInRange(int min, int max) { return ((max - min) + 1) * (min + max) / 2; }
 
 int main() {
-  std::unordered_set<int> ids;
-  int maxID = -1;
   int minID = std::numeric_limits<int>::max();
-  int myID;
+  int maxID = std::numeric_limits<int>::min();
+  int sumOfInputIDs = 0;
 
-  std::ifstream newfile("input.txt", std::ios::in);
-
-  if (newfile.is_open()) {
+  std::ifstream input("input.txt", std::ios::in);
+  if (input.is_open()) {
     std::string line;
 
-    while(getline(newfile, line)) {
-      std::string bits = getBits(line);
-      int curID = getID(bits);
+    while(getline(input, line)) {
+      int curID = getID(line);
       if (maxID < curID) maxID = curID;
       if (curID < minID) minID = curID;
-      ids.emplace(curID);
+      sumOfInputIDs += curID;
     }
 
-    newfile.close();
+    input.close();
   }
 
-  for (int i = minID; i < maxID; ++i) {
-    if (ids.find(i) == ids.end()) {
-      myID = i;
-      break;
-    }
-  }
+  int targetSum = sumNumbersInRange(minID, maxID); // inclusive range
+  int myID = targetSum - sumOfInputIDs;
 
   // Part 1: Find the max ID in input list
-  std::cout << "Max ID: " << maxID << std::endl;
+  std::cout << "Part1: " << maxID << std::endl;
 
   // Part 2: Find the missing ID between minID and maxID
-  std::cout << "My ID: " << myID << std::endl;
+  std::cout << "Part2: " << myID << std::endl;
 
   return 0;
 }

@@ -1,16 +1,16 @@
 #include "../aoc.h"
 
 int main() {
-  std::ifstream newfile("input.txt", std::ios::in);
+  std::ifstream input("input.txt", std::ios::in);
 
-  if (newfile.is_open()) {
+  if (input.is_open()) {
     std::string line;
 
-    while(getline(newfile, line)) {
+    while(getline(input, line)) {
       // do something here
     }
 
-    newfile.close();
+    input.close();
   }
 
   return 0;
