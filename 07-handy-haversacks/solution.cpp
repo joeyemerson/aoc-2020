@@ -16,7 +16,6 @@ std::vector<std::string> splitString(std::string &str, const std::string &delimi
 }
 
 struct Bag {
-public:
   std::vector<std::pair<std::string, int>> containedItems;
 
   Bag(std::string &contents) {
@@ -51,6 +50,7 @@ bool isValidOuterBag(
 int countBagContents(const std::string &color, const std::unordered_map<std::string, Bag> &bags) {
   int totalBags = 1;
   Bag curBag = bags.at(color);
+
   for (const auto &it : curBag.containedItems) {
     totalBags += it.second * countBagContents(it.first, bags);
   }
@@ -74,6 +74,7 @@ int main() {
 
     input.close();
   }
+
   int validOuterBags = 0;
   for (auto &it : bags) {
     if (isValidOuterBag(it.first, myBag, bags)) ++validOuterBags;
