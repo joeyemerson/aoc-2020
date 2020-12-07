@@ -35,23 +35,24 @@ struct Bag {
 bool isValidOuterBag(
   const std::string &color,
   const std::string &target,
-  const std::unordered_map<std::string, Bag> &bags
+  const std::unordered_map<std::string, Bag> &bags,
+  std::unordered_map<std::string, bool> &memo
 ) {
-  bool found = false;
+  if (memo.find(color) != memo.end()) return memo.at(color);
 
   for (const auto &it : bags.at(color).containedItems) {
-    if (found || it.first == target) return true;
-    return isValidOuterBag(it.first, target, bags);
+    bool targetFound = (it.first == target) || isValidOuterBag(it.first, target, bags, memo);
+    memo.emplace(it.first, targetFound);
+    if (targetFound) return true;
   }
 
-  return found;
+  return false;
 }
 
 int countBagContents(const std::string &color, const std::unordered_map<std::string, Bag> &bags) {
   int totalBags = 1;
-  Bag curBag = bags.at(color);
 
-  for (const auto &it : curBag.containedItems) {
+  for (const auto &it : bags.at(color).containedItems) {
     totalBags += it.second * countBagContents(it.first, bags);
   }
 
@@ -76,11 +77,12 @@ int main() {
   }
 
   int validOuterBags = 0;
+  std::unordered_map<std::string, bool> memo;
   for (auto &it : bags) {
-    if (isValidOuterBag(it.first, myBag, bags)) ++validOuterBags;
+    if (isValidOuterBag(it.first, myBag, bags, memo)) ++validOuterBags;
   }
 
-  std::cout << "Part 1: " << validOuterBags << std::endl;
+  std::cout << "Part 1: " << validOuterBags - 1 << std::endl;
   std::cout << "Part 2: " << countBagContents(myBag, bags) - 1 << std::endl;
 
   return 0;
