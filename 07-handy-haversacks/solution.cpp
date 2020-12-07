@@ -41,7 +41,7 @@ bool isValidOuterBag(
 
   for (const auto &it : bags.at(color).containedItems) {
     if (found || it.first == target) return true;
-    found = isValidOuterBag(it.first, target, bags);
+    return isValidOuterBag(it.first, target, bags);
   }
 
   return found;
@@ -80,7 +80,6 @@ int main() {
     if (isValidOuterBag(it.first, myBag, bags)) ++validOuterBags;
   }
 
-  std::cout << "Correct 1: 211, Correct 2: 12414" << std::endl;
   std::cout << "Part 1: " << validOuterBags << std::endl;
   std::cout << "Part 2: " << countBagContents(myBag, bags) - 1 << std::endl;
 
