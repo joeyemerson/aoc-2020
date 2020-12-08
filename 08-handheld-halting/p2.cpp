@@ -12,13 +12,17 @@ struct Instruction {
   }
 };
 
-class InstructionSet {
+class Program {
 private:
   std::vector<Instruction> items;
   int lastChangeIdx = -1;
 
+  void resetVisitedState() {
+    for (Instruction &i : items) { i.visited = false; }
+  }
+
 public:
-  InstructionSet(std::ifstream input) {
+  Program(std::ifstream input) {
     if (input.is_open()) {
       std::string line;
       while(getline(input, line)) { items.emplace_back(Instruction(line)); }
@@ -26,7 +30,7 @@ public:
     }
   }
 
-  int getValue() {
+  int execute() {
     int acc = 0;
     int idx = 0;
 
@@ -41,7 +45,7 @@ public:
     return acc;
   }
 
-  bool isInfinite() {
+  bool hasInfiniteLoop() {
     int idx = 0;
 
     while (idx < items.size() && !items[idx].visited) {
@@ -70,18 +74,14 @@ public:
     items[idx].operation = items[idx].operation == "jmp" ? "nop" : "jmp";
     lastChangeIdx = idx;
   }
-
-  void resetVisitedState() {
-    for (Instruction &i : items) { i.visited = false; }
-  }
 };
 
 int main() {
-  InstructionSet IS(std::ifstream("input.txt", std::ios::in));
+  Program program(std::ifstream("input.txt", std::ios::in));
 
-  while (IS.isInfinite()) { IS.changeNextOp(); }
+  while (program.hasInfiniteLoop()) { program.changeNextOp(); }
 
-  std::cout << "Part 2: " << IS.getValue() << std::endl;
+  std::cout << "Part 2: " << program.execute() << std::endl;
 
   return 0;
 }
