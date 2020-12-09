@@ -2,11 +2,12 @@
 
 // For every num from index 25 -> end, check if any 2 nums within
 // the previous 25 nums add up to the current value. If not, return that value.
+
 uint32_t part1(const std::vector<uint32_t> &nums) {
   size_t preambleSize = 25;
   std::unordered_set<uint32_t> seen;
 
-  for (size_t i = 0; i < preambleSize; i++) { seen.emplace(nums[i]); }
+  for (size_t i = 0; i < preambleSize; ++i) { seen.emplace(nums[i]); }
 
   for (size_t i = preambleSize; i < nums.size(); ++i) {
     uint32_t target = nums[i];
@@ -31,6 +32,7 @@ uint32_t part1(const std::vector<uint32_t> &nums) {
 
 // Find a contiguous subarray of nums that equals the target value.
 // Once found, return the sum of the min and max numbers in that subarray.
+
 uint32_t part2(uint32_t target, const std::vector<uint32_t> &nums) {
   size_t i = 0;
   size_t j = 0;
