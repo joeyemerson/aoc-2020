@@ -174,18 +174,33 @@ private:
 };
 
 int main() {
+  std::cout << "==================================\nTimer Information\n==================================\n";
+  Timer timerParts;
+  Timer timerMain;
+
   Automata automata(std::ifstream("input.txt", std::ios::in));
+  std::cout << "Automata Construction:\t" << timerParts.elapsed() << std::endl;
 
-  bool viewNeighborsOnly = true;
-  automata.stabilize(viewNeighborsOnly);
+  timerParts.reset();
+  automata.stabilize(true);
+  std::cout << "Stabilize Part 1:\t" << timerParts.elapsed() << std::endl;
 
-  std::cout << "Part 1: " << automata.activeCells() << std::endl;
+  int p1 = automata.activeCells();
 
+  timerParts.reset();
   automata.reset();
-  viewNeighborsOnly = false;
-  automata.stabilize(viewNeighborsOnly);
+  std::cout << "Reset Automata:\t\t" << timerParts.elapsed() << std::endl;
 
-  std::cout << "Part 2: " << automata.activeCells() << std::endl;
+  timerParts.reset();
+  automata.stabilize(false);
+  std::cout << "Stabilize Part 2:\t" << timerParts.elapsed() << std::endl;
 
+  int p2 = automata.activeCells();
+
+  std::cout << "Total Runtime:\t\t" << timerMain.elapsed() << std::endl;
+
+  std::cout << "\n==================================\nAoC Answers\n==================================\n";
+  std::cout << "Part 1: " << p1 << std::endl;
+  std::cout << "Part 2: " << p2 << std::endl;
   return 0;
 }
