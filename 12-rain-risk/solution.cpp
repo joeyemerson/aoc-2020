@@ -10,8 +10,8 @@ private:
   std::map<int, char> directions { {0, 'N'}, {90, 'E'}, {180, 'S'}, {270, 'W'} };
 
 public:
-  int getY() { return y; }
   int getX() { return x; }
+  int getY() { return y; }
 
   void updatePosition(std::string &instruction, int mode) {
     char action = instruction.at(0);
@@ -42,8 +42,6 @@ public:
   }
 
   void updateWaypoint(char action, int units) {
-    int tempX, tempY;
-
     switch(action) {
       case 'N': offsetY += units; break;
       case 'E': offsetX += units; break;
